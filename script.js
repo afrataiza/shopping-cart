@@ -80,7 +80,7 @@ function emptyCart() {
 function addLoading(callback) {
     const span = document.createElement('span');
     span.className = 'loading';
-    span.innerText = 'carregando...'
+    span.innerText = 'carregando...';
     sectionItems.appendChild(span);
     callback();
 }
