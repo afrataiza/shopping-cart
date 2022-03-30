@@ -35,9 +35,12 @@ function getSkuFromProductItem(item) {
 function cartItemClickListener(event) {
  const item = event.target;
  cartList.removeChild(item);
+ const list = cartList.innerHTML;
+ saveCartItems(list);
  const price = parseFloat(item.innerText.split('$')[1]);
  result -= price;
  totalPrice.innerText = Math.abs(result).toFixed(1);
+ localStorage.total = totalPrice.innerText; 
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
@@ -53,7 +56,28 @@ async function displayCartItems(item) {
   cartList.appendChild(createCartItemElement({ sku: id, name: title, salePrice: price }));
   result += price;
   totalPrice.innerText = result;
+  const list = cartList.innerHTML;
+  saveCartItems(list);
+  localStorage.total = totalPrice.innerText; 
   return cartList;
+}
+
+function loadinCart() {
+  if (localStorage.cartItems) {
+    const list = getSavedCartItems();
+    cartList.innerHTML = list;
+    result = Number(localStorage.getItem('total'));
+    totalPrice.innerText = result;
+    const loadingList = document.querySelectorAll('ol');
+    loadingList.forEach((li) => li.addEventListener('click', cartItemClickListener));
+  }
+}
+
+function emptyCart() {
+  cartList.innerHTML = '';
+  result = 0;
+  totalPrice.innerText = result;
+  localStorage.clear();
 }
 
 async function displayproducts(query) {
@@ -71,29 +95,25 @@ sectionItems.addEventListener('click', async (element) => {
 });
 }
 
-function emptyCart() {
-  cartList.innerHTML = '';
-  result = 0;
-  totalPrice.innerText = result;
-}
-
 function addLoading(callback) {
-    const span = document.createElement('span');
-    span.className = 'loading';
-    span.innerText = 'carregando...';
-    sectionItems.appendChild(span);
-    callback();
+  const span = document.createElement('span');
+  span.className = 'loading';
+  span.innerText = 'carregando...';
+  sectionItems.appendChild(span);
+  callback();
 }
 
 function removeLoading() {
-  const span = document.querySelector('.loading');
-  setTimeout(() => {
-    sectionItems.removeChild(span);
-    displayproducts('computador');
-  }, 1000);
+const span = document.querySelector('.loading');
+setTimeout(() => {
+  sectionItems.removeChild(span);
+  displayproducts('computador');
+}, 1000);
 }
+
 window.onload = async () => { 
   addLoading(removeLoading);
   const button = document.querySelector('.empty-cart');
   button.addEventListener('click', emptyCart);
+  loadinCart();
 };
