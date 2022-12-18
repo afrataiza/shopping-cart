@@ -17,4 +17,4 @@ Nesse projeto avaliativo da Trybe foi construído um **carrinho de compras** tot
 ![image](https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white)
 
 ## Demonstração 
-Para ver a demonstração de sse projeto clique 👉🏾 [Aqui](https://afrataiza.github.io/shopping-cart/) 👈🏾
+Para ver a demonstração desse projeto clique 👉🏾 [Aqui](https://afrataiza.github.io/shopping-cart/) 👈🏾
