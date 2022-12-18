@@ -75,7 +75,8 @@ function loadingCart() {
   if (localStorage.cartItems) {
     const list = getSavedCartItems();
     cartList.innerHTML = list;
-    result = Number(localStorage.getItem('total'));
+    result = Number(localStorage.getItem('total').split('R$')[1].replace('.', '').replace(',', '.'));
+
     totalPrice.innerText = result.toLocaleString('pt-br',{style: 'currency', currency: 'BRL'});;
     const loadingList = document.querySelectorAll('ol');
     loadingList.forEach((li) => li.addEventListener('click', cartItemClickListener));
